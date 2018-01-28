@@ -179,7 +179,7 @@ wegmanProductPrice = (availProds, cb) => {
           console.log(response.statusCode)
           callback()
         } else {
-          priceReturn.push({"sku":body[0].Sku , "price" : body[0].price})
+          priceReturn.push({"sku":body[0].Sku , "price" : body[0].Price})
           callback()
         }
       })
