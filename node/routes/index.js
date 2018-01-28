@@ -19,19 +19,16 @@ router.get('/', function(req, res, next) {
   });
 });
 router.post('/testNutr', function(req, res, next) {
-  values = {
-    "query":req.query,
-    "body": req.body,
-    "params": req.params}
-  res.send(values)
+  
+    
+    
+  res.send()
 });
-router.get('/calculator', function(req, res, next) {
-  // res.send({"test":"test"})
-  res.render('calculator', {
-    title: 'Express'
-  });
-});
+
 getNutr = (req, res, next) => {
+  console.log(req.body)
+
+
   sampleReq = {
     "pro_p": 10,
     "carb_p": 15,
@@ -42,6 +39,18 @@ getNutr = (req, res, next) => {
     "zone": 4,
     "fg": ["0900", "1100", "0100", "0800"] //veggies -1100 - baked products -1800, breakfast cereals - 0800, dairy eggs - 0100, fruits juices - 0900, 
   }
+  if(req.body){
+    sampleReq["pro_p"] = req.body.pro_p
+    sampleReq["carb_p"] =req.body.carb_p
+    sampleReq["fat_p"] =req.body.fat_p
+    sampleReq["pro_g"] =req.body.pro_g
+    sampleReq["fat_g"] =req.body.fat_g
+    sampleReq["carb_g"] =req.body.carb_g
+    sampleReq["zone"] =req.body.zone
+    sampleReq["fg"] =req.body.fg
+  }
+
+  
   urrrl = "https://api.nal.usda.gov/ndb/nutrients/?subset=1&max=5&sort=c&format=json&api_key=DEMO_KEY"
   fg_string = ""
   for (n = 0; n < sampleReq.fg.length; n++) {
@@ -248,7 +257,7 @@ getTopVelocity = (produs) => {
   console.log("return top Velocity", reult)
   return reult;
 }
-router.get('/nutr', getNutr);
+router.post('/nutr', getNutr);
 module.exports = router;
 
 
