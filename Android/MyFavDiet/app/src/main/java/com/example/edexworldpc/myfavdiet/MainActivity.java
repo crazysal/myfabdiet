@@ -1,5 +1,6 @@
 package com.example.edexworldpc.myfavdiet;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -8,9 +9,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
+    WebView webView;
+    ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,7 +33,41 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-    }
+        webView=(WebView)findViewById(R.id.webView);
+        progressBar = (ProgressBar)findViewById(R.id.progressBar1);
+        final WebSettings webSettings=webView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        // webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+        String url = "http://129.21.94.106:3000/calculator";
+        webView.loadUrl(url);
+        // webView.loadUrl("https://docs.google.com/gview?embedded=true&url="+url);
+        webView.setWebViewClient(new MyAppWebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                progressBar.setVisibility(View.GONE);
+
+                findViewById(R.id.webView).setVisibility(View.VISIBLE);
+            }
+
+            public void onReceivedError(final WebView view, int errorCode, String description,
+                                        final String failingUrl) {
+                Toast.makeText(MainActivity.this, "Please connect to internet", Toast.LENGTH_LONG).show();
+                webView.loadUrl("about:blank");
+                startActivity(new Intent(MainActivity.this, NoInternet.class));
+                //super.onReceivedError(view, errorCode, description, failingUrl);
+            }
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                if (url.endsWith(".pdf")) {
+                    // webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+                    webView.loadUrl(url);
+                    return true;
+                }
+                return false;
+            }
+        });
+        }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

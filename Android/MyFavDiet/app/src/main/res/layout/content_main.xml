@@ -8,15 +8,17 @@
     tools:context="com.example.edexworldpc.myfavdiet.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <TextView
+    <ProgressBar
+        android:id="@+id/progressBar1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true" />
 
-
+    <WebView
+        android:id="@+id/webView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/progressBar1" />
 
 </android.support.constraint.ConstraintLayout>
