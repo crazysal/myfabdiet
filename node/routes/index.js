@@ -11,7 +11,7 @@ var hader = {
   'product-subscription-key': 'd015e7735fdf44e89273289d5ef2814e'
 }
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.post('/', function(req, res, next) {
   // res.send({"test":"test"})
   res.render('index', {
     title: 'Express'
