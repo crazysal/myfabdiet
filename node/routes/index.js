@@ -12,7 +12,7 @@ var hader = {
 }
 var zooper = []
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.post('/', function(req, res, next) {
   // res.send({"test":"test"})
   res.render('index', {
     title: 'Express'
