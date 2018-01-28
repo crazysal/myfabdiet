@@ -7,6 +7,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -14,14 +15,16 @@ import org.w3c.dom.Text;
 public class Login extends AppCompatActivity implements View.OnClickListener {
 
     TextView linkRegister;
+    Button loginBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        linkRegister = (TextView)findViewById(R.id.linkRegister);
 
+        linkRegister = (TextView)findViewById(R.id.linkRegister);
+        loginBtn = (Button)findViewById(R.id.btn_login);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -32,6 +35,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         });
 
         linkRegister.setOnClickListener(this);
+        loginBtn.setOnClickListener(this);
     }
 
     @Override
@@ -41,7 +45,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             case R.id.linkRegister:
                 startActivity(new Intent(Login.this, Register.class));
                 break;
-        }
 
+            case R.id.btn_login:
+                startActivity(new Intent(Login.this, MainActivity.class));
+                break;
+        }
     }
 }
