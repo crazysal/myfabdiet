@@ -6,7 +6,7 @@
         <h1>My FabDiet
         </h1>
       </div>
-      <div class="list-group-item list-group-item-home">
+      <div ng-show="myValue2" class="list-group-item list-group-item-home">
         <form class="navbar-form navbar-left" role="search" action="javascript:void(0);">
           <div class="form-group has-success has-feedback">
             <label for="calories"> Daily Calories:</label>
@@ -29,7 +29,7 @@
           </div>
           <br>
       </div>
-      <div class="list-group-item list-group-item-home">
+      <div ng-show="myValue2" class="list-group-item list-group-item-home">
         <table class="table" id="macro_table">
           <tr>
               <th style="width: 60%;" colspan="2">
@@ -72,7 +72,7 @@
           </tr>
         </table>
       </div>
-      <div class="list-group-item list-group-item-home">
+      <div ng-show="myValue2" class="list-group-item list-group-item-home">
         <form name="myForm">
           <label>Veggies:
             <input type="checkbox" ng-model="checkboxModel.value1" ng-true-value="'1100'" ng-false-value="'null'">
@@ -101,6 +101,18 @@
          </form>
          <strong class="label label-danger">{{message}}</strong><br/>
             <button class="btn btn-primary" ng-click="myFunc()">Generate Meal Plan</button>
+      </div>
+      <div ng-show="myValue" class="list-group-item list-group-item-home">
+        <table id="myTable" class="display" cellspacing="0" width="100%">
+          <thead>
+            <tr><th>Name</th><th>Position</th><th>Office</th><th>Age</th><th>Start date</th><th>Salary</th></tr>
+          </thead>
+          <tfoot><tr><th>Name</th><th>Position</th><th>Office</th><th>Age</th><th>Start date</th><th>Salary</th></tr>
+          </tfoot>
+          <tbody>
+          </tbody>
+        </table>
+
       </div>
       <div class="list-group-item list-group-item-home">
         <div ui-content-for="modals">
@@ -228,6 +240,9 @@ $(function() {
     }), $('input[name="units"]').change(function() {
         "standard" === $(this).val() ? ($("#weigth_units").text("Pounds"), $("#height_units").text("Feet"), $(".inches").show(), e(a)) : ($("#weigth_units").text("Kg"), $("#height_units").text("Cm"), $(".inches").hide(), e(l))
     }), e(a), $("#calories").focus()
+});
+ $(document).ready(function(){
+    $('#myTable').DataTable();
 });
 </script>
 <style type="text/css">

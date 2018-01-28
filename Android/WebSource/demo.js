@@ -480,7 +480,7 @@ app.controller('MainController', function($rootScope, $scope) {
   
 });
 
-app.controller('CalController', function($rootScope, $scope, $http, $location) {
+app.controller('CalController', function($rootScope, $scope, $http, $location, $httpParamSerializer) {
   $scope.Zone = 2
    $scope.checkboxModel = {
        value1 : 'null',
@@ -489,6 +489,8 @@ app.controller('CalController', function($rootScope, $scope, $http, $location) {
        value4 : 'null',
        value5 : 'null'
      };
+     $scope.myValue = true
+     $scope.myValue2 = true
   $scope.myFunc = function() {
         
         // alert($scope.calories)
@@ -543,10 +545,10 @@ app.controller('CalController', function($rootScope, $scope, $http, $location) {
 
         // alert($scope.pro_val)
     };
-   //  $https:.get("127.0.0.1:3000/nutr").success( function(response) {
-   //    $scope.students = response; 
-   //    alert()
-   // });
+    $http:.post("127.0.0.1:3000/nutr", $httpParamSerializer(jsonS)).success( function(response) {
+      $scope.students = response; 
+      alert(JSON.stringify($scope.students))
+   });
 
   });
 app.controller('logController', function($scope) {
