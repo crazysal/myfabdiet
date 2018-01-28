@@ -15,11 +15,11 @@ html.no-js(lang="")
     meta(name="description" content="")
     meta(name="viewport" content="width=device-width, initial-scale=1")
     link(rel="apple-touch-icon" href="apple-touch-icon.png")
-    link(rel="stylesheet" href="css/bootstrap.min.css")
-    link(rel="stylesheet" href="css/bootstrap-theme.min.css")
-    link(type="text/css" href="css/jquery-ui/jquery-ui-1.10.4.custom.min.css" rel="stylesheet")
-    link(rel="stylesheet" href="css/main.css")
-    script(src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js")
+    link(rel="stylesheet" href="../public/stylesheets/bootstrap.min.css")
+    link(rel="stylesheet" href="../public/stylesheets/bootstrap-theme.min.css")
+    
+    link(rel="stylesheet" href="../public/stylesheets/main.css")
+    link(rel="stylesheet" href="../public/stylesheets/jqUI.css")
     script(src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js")
   body
     #fb-root
@@ -227,12 +227,14 @@ html.no-js(lang="")
               button.btn.btn-primary(onclick="calcDailyCals();") Calculate
           // modal body
         // modal content
-    script.
-      window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\\/script>')
-    script(src="js/vendor/bootstrap.min.js")
-    script(type="text/javascript" src="js/vendor/jquery-ui-1.10.4.custom.min.js")
-    script(type="text/javascript" src="js/vendor/jquery.ui.touch-punch.min.js")
-    script(src="js/dist/main.js")
+    
+    script(src="../public/javascripts/jquery-3.3.1.min.js")
+    script(src="../public/javascripts/calculator.js")
+    script(src="../public/javascripts/jqCustom.js")
+    
+    script(src="../public/javascripts/bootstrap.min.js")
+    script(src="../public/javascripts/mordern.js")
+    script(src="../public/javascripts/jqUiTouch.js")
     script.
       (function (b, o, i, l, e, r) {
       b.GoogleAnalyticsObject = l;
