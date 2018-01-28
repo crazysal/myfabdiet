@@ -489,7 +489,7 @@ app.controller('CalController', function($rootScope, $scope, $http, $location, $
        value4 : 'null',
        value5 : 'null'
      };
-     $scope.myValue = true
+     $scope.myValue = false
      $scope.myValue2 = true
   $scope.myFunc = function() {
         
@@ -525,7 +525,47 @@ app.controller('CalController', function($rootScope, $scope, $http, $location, $
         if($scope.fg.length == 0)
           $scope.message = 'Enter the FG'
         console.log(JSON.stringify(jsonS))
-        $location.path( "/data" );
+         // $http:post("127.0.0.1:3000/nutr", $httpParamSerializer(jsonS)).success( function(response) {
+         //    $scope.students = response; 
+         //    alert(JSON.stringify($scope.students))
+         // });
+
+         $http({
+              method : "POST",
+              url : "http://127.0.0.1:3000/nutr",
+              data :  jsonS,
+              headers: {'Content-Type': 'application/json'}
+          }).then(function mySuccess(response) {
+              $scope.response = response.data[0];
+              $scope.dataArray = $scope.response 
+              $scope.valueArray = response.data[1];
+              $scope.repeatData = $scope.dataArray.map(function(value, index) {
+                  return {
+                      data: value,
+                      value: $scope.valueArray[index]
+                  }
+              });
+              $scope.loading = false;
+              console.log(JSON.stringify($scope.repeatData))
+          }, function myError(response) {
+                alert("MMLL")
+          });
+          $scope.myValue = true
+     $scope.myValue2 = false
+         // $http.post('127.0.0.1:3000/nutr', jsonS).success(function(response) {
+         //    $scope.response = response;
+         //    $scope.loading = false;
+         //    alert(JSON.stringify($scope.response))
+          // });
+      //   $http.post("127.0.0.1:3000/nutr", jsonS).success(function(data, status, headers, config) {
+      //   // this callback will be called asynchronously
+      //   // when the response is available
+      //   console.log(data);
+      // }).error(function(data, status, headers, config) {
+      //   // called asynchronously if an error occurs
+      //   // or server returns response with an error status.
+      // });
+        // $location.path( "/data" );
 
 
 
@@ -545,10 +585,11 @@ app.controller('CalController', function($rootScope, $scope, $http, $location, $
 
         // alert($scope.pro_val)
     };
-    $http:.post("127.0.0.1:3000/nutr", $httpParamSerializer(jsonS)).success( function(response) {
-      $scope.students = response; 
-      alert(JSON.stringify($scope.students))
-   });
+   //  $http:post("127.0.0.1:3000/nutr", $httpParamSerializer(jsonS)).success( function(response) {
+   //    $scope.students = response; 
+   //    alert(JSON.stringify($scope.students))
+   // });
+
 
   });
 app.controller('logController', function($scope) {
