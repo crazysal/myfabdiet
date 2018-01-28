@@ -151,7 +151,7 @@ app.config(function($routeProvider) {
   $routeProvider.when('/accordion', {templateUrl: 'accordion.html', reloadOnSearch: false});
   $routeProvider.when('/overlay', {templateUrl: 'overlay.html', reloadOnSearch: false});
   $routeProvider.when('/forms', {templateUrl: 'forms.html', reloadOnSearch: false});
-  $routeProvider.when('/dropdown', {templateUrl: 'dropdown.html', reloadOnSearch: false});
+  $routeProvider.when('/login', {templateUrl: 'login.html', reloadOnSearch: false});
   $routeProvider.when('/data', {templateUrl: 'data.html', reloadOnSearch: false});
 });
 
@@ -265,6 +265,20 @@ app.directive('carousel', function() {
   };
 });
 
+app.directive('script', function() {
+    return {
+      restrict: 'E',
+      scope: false,
+      link: function(scope, elem, attr) {
+        if (attr.type === 'text/javascript-lazy') {
+          var code = elem.text();
+          var f = new Function(code);
+          f();
+        }
+      }
+    };
+  });
+
 app.directive('carouselItem', function($drag) {
   return {
     restrict: 'C',
@@ -367,6 +381,7 @@ app.directive('dragMe', ['$drag', function($drag) {
 // For this trivial demo we have just a unique MainController
 // for everything
 //
+
 app.controller('MainController', function($rootScope, $scope) {
 
   $scope.swiped = function(direction) {
@@ -439,12 +454,12 @@ app.controller('MainController', function($rootScope, $scope) {
   //
   // 'Forms' screen
   //
-  $scope.rememberMe = true;
+ /* $scope.rememberMe = true;
   $scope.email = 'me@example.com';
 
   $scope.login = function() {
     alert('You submitted the login form');
-  };
+  };*/
 
   //
   // 'Drag' screen
@@ -534,3 +549,13 @@ app.controller('CalController', function($rootScope, $scope, $http, $location) {
    // });
 
   });
+app.controller('logController', function($scope) {
+   $scope.rememberMe = true;
+    $scope.emailid = 'me@example.com';
+
+    $scope.login = function() {
+      alert('You submitted the login form');
+    };
+
+  });
+
