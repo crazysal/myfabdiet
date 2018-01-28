@@ -3,11 +3,11 @@ var router = express.Router();
 var request = require('request');
 var async = require("async");
 var hader_price = {
-          authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Ino0NHdNZEh1OHdLc3VtcmJmYUs5OHF4czVZSSIsImtpZCI6Ino0NHdNZEh1OHdLc3VtcmJmYUs5OHF4czVZSSJ9.eyJhdWQiOiJodHRwczovL3dlZ21hbnMtZXMuYXp1cmUtYXBpLm5ldCIsImlzcyI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzEzMThkNTdmLTc1N2ItNDViMy1iMWIwLTliM2MzODQyNzc0Zi8iLCJpYXQiOjE1MTcxMjY2ODMsIm5iZiI6MTUxNzEyNjY4MywiZXhwIjoxNTE3MTMwNTgzLCJhaW8iOiJZMk5nWVBoUnZPckdubTAzbjczOTZLeFgwekgvS2dBPSIsImFwcGlkIjoiMmZhOGY3MWYtY2VjNS00OWU5LWJkMGEtMjI3ODBkYzI2YTliIiwiYXBwaWRhY3IiOiIxIiwiaWRwIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvMTMxOGQ1N2YtNzU3Yi00NWIzLWIxYjAtOWIzYzM4NDI3NzRmLyIsIm9pZCI6ImY0NTIwYmRmLTc1NWItNGY5Yi1iNWJkLTI4NGJiYTI2MTEwOSIsInN1YiI6ImY0NTIwYmRmLTc1NWItNGY5Yi1iNWJkLTI4NGJiYTI2MTEwOSIsInRpZCI6IjEzMThkNTdmLTc1N2ItNDViMy1iMWIwLTliM2MzODQyNzc0ZiIsInV0aSI6IkppdnBNWUE1TGtpRjBUQmJycFlSQUEiLCJ2ZXIiOiIxLjAifQ.QnJDNnPM4pqOcjqDLcMu3CZtcKxma15XGiTXd90NaatyvojvaXhv8GLdgL-MO3Ng3P45gyA_-FquIE_dR8KbyctRzym4-OeNHwvucLVUcRK_mWSYOIdvWIBALlk6MlEn3UfPzXKbArmdEmcvtQMQC1uEAOBupYesOkT8DqL7RBlD8zIW4UkVwxHGY5iX1SkPiwQ6_yeGDAA_PFO2K8rT05vBxF0gxWT_zzDpQSt1LIH8hM5yR42I18_illsE_nplurpdbSyxGyBdV2KCZhFvRaXC1Vm3u5m32BnZDtlFg_VqBpfy92pClBGJDtuVjqfqm60Ku7G1FTyaiegY_i2DaA',
+          authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Ino0NHdNZEh1OHdLc3VtcmJmYUs5OHF4czVZSSIsImtpZCI6Ino0NHdNZEh1OHdLc3VtcmJmYUs5OHF4czVZSSJ9.eyJhdWQiOiJodHRwczovL3dlZ21hbnMtZXMuYXp1cmUtYXBpLm5ldCIsImlzcyI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzEzMThkNTdmLTc1N2ItNDViMy1iMWIwLTliM2MzODQyNzc0Zi8iLCJpYXQiOjE1MTcxMzE1NDQsIm5iZiI6MTUxNzEzMTU0NCwiZXhwIjoxNTE3MTM1NDQ0LCJhaW8iOiJZMk5nWU1pNGNFZE54eWlWUzA1VGpmTlZiRk1aQUE9PSIsImFwcGlkIjoiMmZhOGY3MWYtY2VjNS00OWU5LWJkMGEtMjI3ODBkYzI2YTliIiwiYXBwaWRhY3IiOiIxIiwiaWRwIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvMTMxOGQ1N2YtNzU3Yi00NWIzLWIxYjAtOWIzYzM4NDI3NzRmLyIsIm9pZCI6ImY0NTIwYmRmLTc1NWItNGY5Yi1iNWJkLTI4NGJiYTI2MTEwOSIsInN1YiI6ImY0NTIwYmRmLTc1NWItNGY5Yi1iNWJkLTI4NGJiYTI2MTEwOSIsInRpZCI6IjEzMThkNTdmLTc1N2ItNDViMy1iMWIwLTliM2MzODQyNzc0ZiIsInV0aSI6InRYbkZCTlk4ZjBpbEV0azZ1dTBSQUEiLCJ2ZXIiOiIxLjAifQ.b8WT1OUmJhg0pA4a-KIMHUJxUjXk_EhRmZhh_yRrxr0OqCGp3IPuCH5JOI3RgFJgAnW9WLjw3o_Y64rPEuz7Jh6ejrWLBuNsmWDX40VuepLvyrj-CHtBJFOWvffWQLYSav4gCN_CSWGDuVJoeTzBWJGfbD_hRtMECP1sSGmpWVO82bU8SVvpftkgrE40ZwmPwXmR9tub_lcWHYoIig3JDsNIYsuyd1pDtUAAjee2-r3o4MCV-syM-q2XXFeRbL7qzunyGmYT23Y_AeSiX6CCax9y5u-D0pfMp42tqgpQ3BvhCr5CArwQ7V-DRld78K6dgrmuIYwUSRFsKv2OCZdVmQ',
           'price-subscription-key': 'd015e7735fdf44e89273289d5ef2814e'
         }
 var hader = {
-          authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Ino0NHdNZEh1OHdLc3VtcmJmYUs5OHF4czVZSSIsImtpZCI6Ino0NHdNZEh1OHdLc3VtcmJmYUs5OHF4czVZSSJ9.eyJhdWQiOiJodHRwczovL3dlZ21hbnMtZXMuYXp1cmUtYXBpLm5ldCIsImlzcyI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzEzMThkNTdmLTc1N2ItNDViMy1iMWIwLTliM2MzODQyNzc0Zi8iLCJpYXQiOjE1MTcxMjY2ODMsIm5iZiI6MTUxNzEyNjY4MywiZXhwIjoxNTE3MTMwNTgzLCJhaW8iOiJZMk5nWVBoUnZPckdubTAzbjczOTZLeFgwekgvS2dBPSIsImFwcGlkIjoiMmZhOGY3MWYtY2VjNS00OWU5LWJkMGEtMjI3ODBkYzI2YTliIiwiYXBwaWRhY3IiOiIxIiwiaWRwIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvMTMxOGQ1N2YtNzU3Yi00NWIzLWIxYjAtOWIzYzM4NDI3NzRmLyIsIm9pZCI6ImY0NTIwYmRmLTc1NWItNGY5Yi1iNWJkLTI4NGJiYTI2MTEwOSIsInN1YiI6ImY0NTIwYmRmLTc1NWItNGY5Yi1iNWJkLTI4NGJiYTI2MTEwOSIsInRpZCI6IjEzMThkNTdmLTc1N2ItNDViMy1iMWIwLTliM2MzODQyNzc0ZiIsInV0aSI6IkppdnBNWUE1TGtpRjBUQmJycFlSQUEiLCJ2ZXIiOiIxLjAifQ.QnJDNnPM4pqOcjqDLcMu3CZtcKxma15XGiTXd90NaatyvojvaXhv8GLdgL-MO3Ng3P45gyA_-FquIE_dR8KbyctRzym4-OeNHwvucLVUcRK_mWSYOIdvWIBALlk6MlEn3UfPzXKbArmdEmcvtQMQC1uEAOBupYesOkT8DqL7RBlD8zIW4UkVwxHGY5iX1SkPiwQ6_yeGDAA_PFO2K8rT05vBxF0gxWT_zzDpQSt1LIH8hM5yR42I18_illsE_nplurpdbSyxGyBdV2KCZhFvRaXC1Vm3u5m32BnZDtlFg_VqBpfy92pClBGJDtuVjqfqm60Ku7G1FTyaiegY_i2DaA',
+          authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Ino0NHdNZEh1OHdLc3VtcmJmYUs5OHF4czVZSSIsImtpZCI6Ino0NHdNZEh1OHdLc3VtcmJmYUs5OHF4czVZSSJ9.eyJhdWQiOiJodHRwczovL3dlZ21hbnMtZXMuYXp1cmUtYXBpLm5ldCIsImlzcyI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzEzMThkNTdmLTc1N2ItNDViMy1iMWIwLTliM2MzODQyNzc0Zi8iLCJpYXQiOjE1MTcxMzE1NDQsIm5iZiI6MTUxNzEzMTU0NCwiZXhwIjoxNTE3MTM1NDQ0LCJhaW8iOiJZMk5nWU1pNGNFZE54eWlWUzA1VGpmTlZiRk1aQUE9PSIsImFwcGlkIjoiMmZhOGY3MWYtY2VjNS00OWU5LWJkMGEtMjI3ODBkYzI2YTliIiwiYXBwaWRhY3IiOiIxIiwiaWRwIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvMTMxOGQ1N2YtNzU3Yi00NWIzLWIxYjAtOWIzYzM4NDI3NzRmLyIsIm9pZCI6ImY0NTIwYmRmLTc1NWItNGY5Yi1iNWJkLTI4NGJiYTI2MTEwOSIsInN1YiI6ImY0NTIwYmRmLTc1NWItNGY5Yi1iNWJkLTI4NGJiYTI2MTEwOSIsInRpZCI6IjEzMThkNTdmLTc1N2ItNDViMy1iMWIwLTliM2MzODQyNzc0ZiIsInV0aSI6InRYbkZCTlk4ZjBpbEV0azZ1dTBSQUEiLCJ2ZXIiOiIxLjAifQ.b8WT1OUmJhg0pA4a-KIMHUJxUjXk_EhRmZhh_yRrxr0OqCGp3IPuCH5JOI3RgFJgAnW9WLjw3o_Y64rPEuz7Jh6ejrWLBuNsmWDX40VuepLvyrj-CHtBJFOWvffWQLYSav4gCN_CSWGDuVJoeTzBWJGfbD_hRtMECP1sSGmpWVO82bU8SVvpftkgrE40ZwmPwXmR9tub_lcWHYoIig3JDsNIYsuyd1pDtUAAjee2-r3o4MCV-syM-q2XXFeRbL7qzunyGmYT23Y_AeSiX6CCax9y5u-D0pfMp42tqgpQ3BvhCr5CArwQ7V-DRld78K6dgrmuIYwUSRFsKv2OCZdVmQ',
           'product-subscription-key': 'd015e7735fdf44e89273289d5ef2814e'
         }
 /* GET home page. */
@@ -31,10 +31,10 @@ getNutr = (req, res, next) => {
     "pro_g": 50,
     "carb_g": 75,
     "fat_g": 167,
-    "zone": 1,
-    "fg": ["0100", "1100", "1800"] //veggies -1100 - baked products -1800, breakfast cereals - 0800, dairy eggs - 0100, fruits juices - 0900, 
+    "zone": 4,
+    "fg": ["0900", "1100", "0100", "0800"] //veggies -1100 - baked products -1800, breakfast cereals - 0800, dairy eggs - 0100, fruits juices - 0900, 
   }
-  urrrl = "https://api.nal.usda.gov/ndb/nutrients/?max=10&sort=c&format=json&api_key=DEMO_KEY"
+  urrrl = "https://api.nal.usda.gov/ndb/nutrients/?subset=1&max=20&sort=c&format=json&api_key=DEMO_KEY"
   fg_string = ""
   for (n = 0; n < sampleReq.fg.length; n++) {
     fg_string += "&fg=" + sampleReq.fg[n]
@@ -47,11 +47,14 @@ getNutr = (req, res, next) => {
   } else if (sampleReq.zone == 5) {
     urrrl += "&nutrients=204&nutrients=205&nutrients=203"
   }
+  console.log("Hit 1st api : ", urrrl)
   responseHandle = (error, response, body) => {
-    body = JSON.parse(body)
+    
     if (error) {
       res.send(error)
     } else {
+      body = JSON.parse(body)
+      console.log("1ast",body)
       bodyObj = body.report.foods
       fdaList = [];
       for (key in bodyObj) {
@@ -75,12 +78,14 @@ getNutr = (req, res, next) => {
   request.get(urrrl, responseHandle)
 }
 wegmanProductSearch = (fdaList, cb) => {
+  console.log("Searching Products")
   skuReturn = []
   wegProSearchUrl_b = "https://wegmans-es.azure-api.net/productpublic/products/search?criteria="
 
   var asyncTasks = [];
   // Loop through some items
   fdaList.forEach(function(item) {
+    console.log(item)
     asyncTasks.push(function(callback) {
       wegProSearchUrl = wegProSearchUrl_b + item
       ssss = "Product-Subscription-Key"
@@ -89,13 +94,16 @@ wegmanProductSearch = (fdaList, cb) => {
         headers: hader
       };
       request.get(options, (error, response, body) => {
-        body = JSON.parse(body)
-        bodyItem = body.Results[0]
         
         if (error) {
+          console.log(error)
           skuReturn.push(error)
           callback()
         } else {
+          body = JSON.parse(body)
+          console.log(body);
+          bodyItem = body.Results[0]
+        
           skuReturn.push(bodyItem)
           callback()
         }
@@ -107,6 +115,7 @@ wegmanProductSearch = (fdaList, cb) => {
   });
 }
 wegmanProductAvail = (products, cb) => {
+  console.log("Calculating Product Prices")
   
   availReturn = []
   wegProAvailUrl_b = "https://wegmans-es.azure-api.net/productpublic/productavailability/"
@@ -127,8 +136,10 @@ wegmanProductAvail = (products, cb) => {
           callback()
         } else {
           if(body.IsChainAvailable){
+            // console.log(body)
             finalBody = getTopVelocity(body)
-            availReturn.push(finalBody)
+            // availReturn.push(body.StoreAvailability[0])
+            availReturn.push(body.finalBody)
           }
           callback()
         }
@@ -152,10 +163,10 @@ wegmanProductPrice = (availProds, cb) => {
         url: wegProPriceUrl,
         headers: hader_price 
       };
-       console.log(opptions)
+
       request.get(opptions, (error, response, body) => {
         body = JSON.parse(body)
-              console.log(body)
+              // console.log(body)
 
         if (error) {
           priceReturn.push(error)
@@ -174,8 +185,8 @@ wegmanProductPrice = (availProds, cb) => {
 getTopVelocity = (produs)=>{
   toLoop = produs.StoreAvailability
   max = 0;
-  for (var i =0 ; i < toLoop.length; i++) {
-    console.log(toLoop[i].IsAvailable)
+  for (var i = toLoop.length - 1 ; i >=0 ; i--) {
+  
     if(toLoop[i].IsAvailable && toLoop[i].Velocity > max )
       reult = toLoop[i];
       max = toLoop[i].Velocity
