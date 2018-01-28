@@ -1,4 +1,4 @@
-<div class="scrollable">
+<div class="scrollable" ng-controller="CalController">
   <div class="scrollable-content">
 
     <div class="list-group text-center">
@@ -10,7 +10,7 @@
         <form class="navbar-form navbar-left" role="search" action="javascript:void(0);">
           <div class="form-group has-success has-feedback">
             <label for="calories"> Daily Calories:</label>
-            <input id="calories" type="number" class="form-control" placeholder="Enter Calories">
+            <input name="caloriesss" id="calories" type="number" class="form-control" ng-model="calories" placeholder="Enter Calories">
           </div>
           <button class="btn btn-primary" id="calculateBtn">Calculate</button>
           <a href="" ui-turn-on="modal1" class="btn btn-default">
@@ -21,11 +21,11 @@
       <div class="list-group-item list-group-item-home">
         <label>Presets (Carb/Protein/Fat):  </label>
         <div class="col-md-12 text text-small" id="presets">
-          <button class="btn btn-default" type="button" onclick="moveSliders(60,25,15);">60/25/15<br>(High Carb)</button>
-          <button class="btn btn-default active" type="button" onclick="moveSliders(50,30,20);">50/30/20<br>(Moderate)</button>
-          <button class="btn btn-default" type="button" onclick="moveSliders(40,30,30);">40/30/30<br>(Zone Diet)</button>
-          <button class="btn btn-default" type="button" onclick="moveSliders(25,45,30);">25/45/30<br>(Low Carb)</button>
-          <button class="btn btn-default" type="button" onclick="moveSliders(10,15,75);">10/15/75<br>(Keto)</button>
+          <button class="btn btn-default" type="button" ng-click =zone(1) onclick="moveSliders(60,25,15);">60/25/15<br>(High Carb)</button>
+          <button class="btn btn-default active" type="button" ng-click =zone(2) onclick="moveSliders(50,30,20);">50/30/20<br>(Moderate)</button>
+          <button class="btn btn-default" type="button" ng-click =zone(3) onclick="moveSliders(40,30,30);">40/30/30<br>(Zone Diet)</button>
+          <button class="btn btn-default" type="button" ng-click =zone(4) onclick="moveSliders(25,45,30);">25/45/30<br>(Low Carb)</button>
+          <button class="btn btn-default" type="button" ng-click =zone(5) onclick="moveSliders(10,15,75);">10/15/75<br>(Keto)</button>
           </div>
           <br>
       </div>
@@ -73,6 +73,33 @@
         </table>
       </div>
       <div class="list-group-item list-group-item-home">
+        <form name="myForm">
+          <label>Veggies:
+            <input type="checkbox" ng-model="checkboxModel.value1" ng-true-value="'1100'" ng-false-value="'null'">
+          </label><br/>
+          <label>Baked-Products:
+            <input type="checkbox" ng-model="checkboxModel.value2"
+                   ng-true-value="'1800'" ng-false-value="'null'">
+           </label><br/>
+           <label>Dairy-eggs:
+            <input type="checkbox" ng-model="checkboxModel.value3"
+                   ng-true-value="'0100'" ng-false-value="'null'">
+           </label><br/>
+           <label>Breakfast-cereals:
+            <input type="checkbox" ng-model="checkboxModel.value4"
+                   ng-true-value="'0800'" ng-false-value="'null'">
+           </label><br/>
+           <label>Fruits-juice:
+            <input type="checkbox" ng-model="checkboxModel.value5"
+                   ng-true-value="'0900'" ng-false-value="'null'">
+           </label><br/>
+          <!-- <tt>value1 = {{checkboxModel.value1}}</tt><br/>
+          <tt>value2 = {{checkboxModel.value2}}</tt><br/>
+          <tt>value1 = {{checkboxModel.value1}}</tt><br/>
+          <tt>value2 = {{checkboxModel.value2}}</tt><br/>
+          <tt>value1 = {{checkboxModel.value1}}</tt><br/> -->
+         </form>
+         <span class=" text text-danger"></span>
             <button ng-click="myFunc()">OK</button>
       </div>
       <div class="list-group-item list-group-item-home">

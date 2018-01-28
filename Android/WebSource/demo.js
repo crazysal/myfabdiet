@@ -6,7 +6,6 @@
 // Here is how to define your module
 // has dependent on mobile-angular-ui
 //
-var e = 0
 function populateTotalPercent(e, a) {
     if ("carb" == a) l = e + parseInt($("#protein_slider").slider("value")) + parseInt($("#fat_slider").slider("value"));
     else if ("protein" == a) l = e + parseInt($("#carb_slider").slider("value")) + parseInt($("#fat_slider").slider("value"));
@@ -112,7 +111,7 @@ $(function() {
     setupSlider("carb", 50, 4), setupSlider("protein", 30, 4), setupSlider("fat", 20, 9), $("#gramsPerMeal").change(function() {
         this.checked ? ($("#numberMeals").slideDown("slow"), $("#macro_table th:nth-child(3)").show(), $("#macro_table td:nth-child(4)").show()) : ($("#numberMeals").slideUp("slow"), $("#macro_table th:nth-child(3)").hide(), $("#macro_table td:nth-child(4)").hide())
     }), $("#calculateBtn").click(function() {
-        e = $("#calories").val();
+        var e = $("#calories").val();
         $.isNumeric(e) ? popupSliderCals() : alert("Please enter a valid calorie amount")
     }), $("#presets > .btn").click(function() {
         $("#presets > .btn").removeClass("active"), $(this).toggleClass("active")
@@ -466,4 +465,77 @@ app.controller('MainController', function($rootScope, $scope) {
       $scope.notices.splice(index, 1);
     }
   };
+
+  
 });
+
+app.controller('CalController', function($rootScope, $scope,$https:) {
+  $scope.Zone = null
+   $scope.checkboxModel = {
+       value1 : 'null',
+       value2 : 'null',
+       value3 : 'null',
+       value4 : 'null',
+       value5 : 'null'
+     };
+  $scope.myFunc = function() {
+        
+        // alert($scope.calories)
+        $scope.pro_per = document.getElementById("protein_percent").innerHTML
+        $scope.fat_per = document.getElementById("fat_percent").innerHTML
+        $scope.carb_per = document.getElementById("carb_percent").innerHTML
+        $scope.pro_val = document.getElementById("protein_cals").innerHTML
+        $scope.fat_val = document.getElementById("fat_cals").innerHTML
+        $scope.carb_val = document.getElementById("carb_cals").innerHTML
+        var jsonS={
+                  pro_p:$scope.pro_per,
+                  carb_p: $scope.carb_per,
+                  fat_p:$scope.fat_per,
+                  fat_g: $scope.fat_val,
+                  pro_g:$scope.pro_val,
+                  carb_g:$scope.carb_val,
+                  zone: $scope.Zone
+                  
+               }
+        $scope.fg = []
+        if($scope.checkboxModel.value1 != 'null')
+          $scope.fg.push('1100')
+        if($scope.checkboxModel.value2 != 'null')
+          $scope.fg.push('1800')
+        if($scope.checkboxModel.value3 != 'null')
+          $scope.fg.push('0100')
+        if($scope.checkboxModel.value4 != 'null')
+          $scope.fg.push('0800')
+        if($scope.checkboxModel.value5 != 'null')
+          $scope.fg.push('0900')
+        jsonS.fg=$scope.fg
+        if($scope.fg.length == 0)
+          alert("Enter the fg")
+        if($scope.Zone == null)
+          alert("Enter the zone")
+        alert(JSON.stringify(jsonS))
+
+
+
+        // alert($scope.pro_val)
+    };
+    $scope.zone = function(valUE) {
+        
+        // alert(valUE)
+        $scope.Zone= valUE
+        // $scope.pro_per = document.getElementById("protein_percent").innerHTML
+        // $scope.fat_per = document.getElementById("fat_percent").innerHTML
+        // $scope.carb_per = document.getElementById("carb_percent").innerHTML
+        // $scope.pro_val = document.getElementById("protein_cals").innerHTML
+        // $scope.fat_val = document.getElementById("fat_cals").innerHTML
+        // $scope.carb_val = document.getElementById("carb_cals").innerHTML
+
+
+        // alert($scope.pro_val)
+    };
+    $https:.get(url).success( function(response) {
+      $scope.students = response; 
+      alert()
+   });
+
+  });
