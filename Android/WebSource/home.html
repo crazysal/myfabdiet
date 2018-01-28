@@ -13,7 +13,7 @@
             <input name="caloriesss" id="calories" type="number" class="form-control" ng-model="calories" placeholder="Enter Calories">
           </div>
           <button class="btn btn-primary" id="calculateBtn">Calculate</button>
-          <a href="" ui-turn-on="modal1" class="btn btn-default">
+          <a href="" ui-turn-on="modal1" class="btn btn-success">
             <strong>Help Me Find My Daily Calories Needs</strong>
           </a>
         </form>
@@ -99,8 +99,8 @@
           <tt>value2 = {{checkboxModel.value2}}</tt><br/>
           <tt>value1 = {{checkboxModel.value1}}</tt><br/> -->
          </form>
-         <span class=" text text-danger"></span>
-            <button ng-click="myFunc()">OK</button>
+         <strong class="label label-danger">{{message}}</strong><br/>
+            <button class="btn btn-primary" ng-click="myFunc()">Generate Meal Plan</button>
       </div>
       <div class="list-group-item list-group-item-home">
         <div ui-content-for="modals">

@@ -122,7 +122,7 @@ $(function() {
     }), e(a), $("#calories").focus()
 });
 //angular filesss
-var app = angular.module('MobileAngularUiExamples', [
+var app = angular.module('MYFabDiet', [
   'ngRoute',
   'mobile-angular-ui',
 
@@ -152,11 +152,7 @@ app.config(function($routeProvider) {
   $routeProvider.when('/overlay', {templateUrl: 'overlay.html', reloadOnSearch: false});
   $routeProvider.when('/forms', {templateUrl: 'forms.html', reloadOnSearch: false});
   $routeProvider.when('/dropdown', {templateUrl: 'dropdown.html', reloadOnSearch: false});
-  $routeProvider.when('/touch', {templateUrl: 'touch.html', reloadOnSearch: false});
-  $routeProvider.when('/swipe', {templateUrl: 'swipe.html', reloadOnSearch: false});
-  $routeProvider.when('/drag', {templateUrl: 'drag.html', reloadOnSearch: false});
-  $routeProvider.when('/drag2', {templateUrl: 'drag2.html', reloadOnSearch: false});
-  $routeProvider.when('/carousel', {templateUrl: 'carousel.html', reloadOnSearch: false});
+  $routeProvider.when('/data', {templateUrl: 'data.html', reloadOnSearch: false});
 });
 
 //
@@ -469,8 +465,8 @@ app.controller('MainController', function($rootScope, $scope) {
   
 });
 
-app.controller('CalController', function($rootScope, $scope,$https:) {
-  $scope.Zone = null
+app.controller('CalController', function($rootScope, $scope, $http, $location) {
+  $scope.Zone = 2
    $scope.checkboxModel = {
        value1 : 'null',
        value2 : 'null',
@@ -510,10 +506,9 @@ app.controller('CalController', function($rootScope, $scope,$https:) {
           $scope.fg.push('0900')
         jsonS.fg=$scope.fg
         if($scope.fg.length == 0)
-          alert("Enter the fg")
-        if($scope.Zone == null)
-          alert("Enter the zone")
-        alert(JSON.stringify(jsonS))
+          $scope.message = 'Enter the FG'
+        console.log(JSON.stringify(jsonS))
+        $location.path( "/data" );
 
 
 
@@ -533,9 +528,9 @@ app.controller('CalController', function($rootScope, $scope,$https:) {
 
         // alert($scope.pro_val)
     };
-    $https:.get(url).success( function(response) {
-      $scope.students = response; 
-      alert()
-   });
+   //  $https:.get("127.0.0.1:3000/nutr").success( function(response) {
+   //    $scope.students = response; 
+   //    alert()
+   // });
 
   });

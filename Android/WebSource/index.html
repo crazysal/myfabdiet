@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="/dist/css/mobile-angular-ui-base.min.css" />
     <link rel="stylesheet" href="/dist/css/mobile-angular-ui-desktop.min.css" />
     <link rel="stylesheet" href="/demo.css" />
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-route.min.js"></script>
     <script src="/dist/js/mobile-angular-ui.min.js"></script>
     <!-- Required to use $touch, $swipe, $drag and $translate services -->
@@ -29,26 +29,26 @@
   </head>
 
   <body
-    ng-app="MobileAngularUiExamples"
+    ng-app="MYFabDiet"
     ng-controller="MainController"
     ui-prevent-touchmove-defaults
     >
 
     <!-- Sidebars -->
-    <div ng-include="'sidebar.html'"
+    <!-- <div ng-include="'sidebar.html'"
             ui-track-as-search-param="true"
             class="sidebar sidebar-left"></div>
 
     <div ng-include="'sidebarRight.html'"
-            class="sidebar sidebar-right"></div>
+            class="sidebar sidebar-right"></div> -->
 
-    <div class="app"
+   <!--  <div class="app"
          ui-swipe-right="Ui.turnOn('uiSidebarLeft')"
-         ui-swipe-left="Ui.turnOff('uiSidebarLeft')">
+         ui-swipe-left="Ui.turnOff('uiSidebarLeft')"> -->
 
       <!-- Navbars -->
 
-      <div class="navbar navbar-app navbar-absolute-top">
+      <!-- <div class="navbar navbar-app navbar-absolute-top">
         <div class="navbar-brand navbar-brand-center" ui-yield-to="title">
           Mobile Angular UI
         </div>
@@ -62,7 +62,7 @@
             <i class="fa fa-comment"></i> Chat
           </div>
         </div>
-      </div>
+      </div> -->
 
       <div class="navbar navbar-app navbar-absolute-bottom">
         <div class="btn-group justified">
@@ -82,7 +82,7 @@
         </div>
       </div>
 
-    </div><!-- ~ .app -->
+    </div>~ .app
 
     <div ui-yield-to="modals"></div>
   </body>
