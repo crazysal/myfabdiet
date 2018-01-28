@@ -2,6 +2,14 @@ var express = require('express');
 var router = express.Router();
 var request = require('request');
 var async = require("async");
+var hader_price = {
+          authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Ino0NHdNZEh1OHdLc3VtcmJmYUs5OHF4czVZSSIsImtpZCI6Ino0NHdNZEh1OHdLc3VtcmJmYUs5OHF4czVZSSJ9.eyJhdWQiOiJodHRwczovL3dlZ21hbnMtZXMuYXp1cmUtYXBpLm5ldCIsImlzcyI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzEzMThkNTdmLTc1N2ItNDViMy1iMWIwLTliM2MzODQyNzc0Zi8iLCJpYXQiOjE1MTcxMjY2ODMsIm5iZiI6MTUxNzEyNjY4MywiZXhwIjoxNTE3MTMwNTgzLCJhaW8iOiJZMk5nWVBoUnZPckdubTAzbjczOTZLeFgwekgvS2dBPSIsImFwcGlkIjoiMmZhOGY3MWYtY2VjNS00OWU5LWJkMGEtMjI3ODBkYzI2YTliIiwiYXBwaWRhY3IiOiIxIiwiaWRwIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvMTMxOGQ1N2YtNzU3Yi00NWIzLWIxYjAtOWIzYzM4NDI3NzRmLyIsIm9pZCI6ImY0NTIwYmRmLTc1NWItNGY5Yi1iNWJkLTI4NGJiYTI2MTEwOSIsInN1YiI6ImY0NTIwYmRmLTc1NWItNGY5Yi1iNWJkLTI4NGJiYTI2MTEwOSIsInRpZCI6IjEzMThkNTdmLTc1N2ItNDViMy1iMWIwLTliM2MzODQyNzc0ZiIsInV0aSI6IkppdnBNWUE1TGtpRjBUQmJycFlSQUEiLCJ2ZXIiOiIxLjAifQ.QnJDNnPM4pqOcjqDLcMu3CZtcKxma15XGiTXd90NaatyvojvaXhv8GLdgL-MO3Ng3P45gyA_-FquIE_dR8KbyctRzym4-OeNHwvucLVUcRK_mWSYOIdvWIBALlk6MlEn3UfPzXKbArmdEmcvtQMQC1uEAOBupYesOkT8DqL7RBlD8zIW4UkVwxHGY5iX1SkPiwQ6_yeGDAA_PFO2K8rT05vBxF0gxWT_zzDpQSt1LIH8hM5yR42I18_illsE_nplurpdbSyxGyBdV2KCZhFvRaXC1Vm3u5m32BnZDtlFg_VqBpfy92pClBGJDtuVjqfqm60Ku7G1FTyaiegY_i2DaA',
+          'price-subscription-key': 'd015e7735fdf44e89273289d5ef2814e'
+        }
+var hader = {
+          authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Ino0NHdNZEh1OHdLc3VtcmJmYUs5OHF4czVZSSIsImtpZCI6Ino0NHdNZEh1OHdLc3VtcmJmYUs5OHF4czVZSSJ9.eyJhdWQiOiJodHRwczovL3dlZ21hbnMtZXMuYXp1cmUtYXBpLm5ldCIsImlzcyI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzEzMThkNTdmLTc1N2ItNDViMy1iMWIwLTliM2MzODQyNzc0Zi8iLCJpYXQiOjE1MTcxMjY2ODMsIm5iZiI6MTUxNzEyNjY4MywiZXhwIjoxNTE3MTMwNTgzLCJhaW8iOiJZMk5nWVBoUnZPckdubTAzbjczOTZLeFgwekgvS2dBPSIsImFwcGlkIjoiMmZhOGY3MWYtY2VjNS00OWU5LWJkMGEtMjI3ODBkYzI2YTliIiwiYXBwaWRhY3IiOiIxIiwiaWRwIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvMTMxOGQ1N2YtNzU3Yi00NWIzLWIxYjAtOWIzYzM4NDI3NzRmLyIsIm9pZCI6ImY0NTIwYmRmLTc1NWItNGY5Yi1iNWJkLTI4NGJiYTI2MTEwOSIsInN1YiI6ImY0NTIwYmRmLTc1NWItNGY5Yi1iNWJkLTI4NGJiYTI2MTEwOSIsInRpZCI6IjEzMThkNTdmLTc1N2ItNDViMy1iMWIwLTliM2MzODQyNzc0ZiIsInV0aSI6IkppdnBNWUE1TGtpRjBUQmJycFlSQUEiLCJ2ZXIiOiIxLjAifQ.QnJDNnPM4pqOcjqDLcMu3CZtcKxma15XGiTXd90NaatyvojvaXhv8GLdgL-MO3Ng3P45gyA_-FquIE_dR8KbyctRzym4-OeNHwvucLVUcRK_mWSYOIdvWIBALlk6MlEn3UfPzXKbArmdEmcvtQMQC1uEAOBupYesOkT8DqL7RBlD8zIW4UkVwxHGY5iX1SkPiwQ6_yeGDAA_PFO2K8rT05vBxF0gxWT_zzDpQSt1LIH8hM5yR42I18_illsE_nplurpdbSyxGyBdV2KCZhFvRaXC1Vm3u5m32BnZDtlFg_VqBpfy92pClBGJDtuVjqfqm60Ku7G1FTyaiegY_i2DaA',
+          'product-subscription-key': 'd015e7735fdf44e89273289d5ef2814e'
+        }
 /* GET home page. */
 router.get('/', function(req, res, next) {
   // res.send({"test":"test"})
@@ -49,52 +57,130 @@ getNutr = (req, res, next) => {
       for (key in bodyObj) {
         fdaList.push(bodyObj[key].name)
       }
-      sku = wegmanProductSearch(fdaList)
-      // hit wegman product search 
-      res.send(sku)
+      wegmanProductSearch(fdaList, function(err, product_data){
+        wegmanProductAvail(product_data, function(err, avail_data){
+        
+          wegmanProductPrice(avail_data, function(err, data){
+          
+            res.send(data)
+
+          })
+
+        })
+        
+
+      })
     }
   }
   request.get(urrrl, responseHandle)
-  // res.send("muh me lele")
 }
-wegmanProductSearch = (fdaList) => {
+wegmanProductSearch = (fdaList, cb) => {
   skuReturn = []
   wegProSearchUrl_b = "https://wegmans-es.azure-api.net/productpublic/products/search?criteria="
-  // GET https://wegmans-es.azure-api.net/productpublic/products/search?criteria=699997 HTTP/1.1
-  // Host: wegmans-es.azure-api.net
-  // Product-Subscription-Key: cf65ff63cddc4733ae97bbf578d7f87b
-  // Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Ino0NHdNZEh1OHdLc3VtcmJmYUs5OHF4czVZSSIsImtpZCI6Ino0NHdNZEh1OHdLc3VtcmJmYUs5OHF4czVZSSJ9.eyJhdWQiOiJodHRwczovL3dlZ21hbnMtZXMuYXp1cmUtYXBpLm5ldCIsImlzcyI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzEzMThkNTdmLTc1N2ItNDViMy1iMWIwLTliM2MzODQyNzc0Zi8iLCJpYXQiOjE1MTcxMTg3MjAsIm5iZiI6MTUxNzExODcyMCwiZXhwIjoxNTE3MTIyNjIwLCJhaW8iOiJZMk5nWUxoM09aN3phTjIvaHB0eVRadmo1bC9iQ2dBPSIsImFwcGlkIjoiMmZhOGY3MWYtY2VjNS00OWU5LWJkMGEtMjI3ODBkYzI2YTliIiwiYXBwaWRhY3IiOiIxIiwiaWRwIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvMTMxOGQ1N2YtNzU3Yi00NWIzLWIxYjAtOWIzYzM4NDI3NzRmLyIsIm9pZCI6ImY0NTIwYmRmLTc1NWItNGY5Yi1iNWJkLTI4NGJiYTI2MTEwOSIsInN1YiI6ImY0NTIwYmRmLTc1NWItNGY5Yi1iNWJkLTI4NGJiYTI2MTEwOSIsInRpZCI6IjEzMThkNTdmLTc1N2ItNDViMy1iMWIwLTliM2MzODQyNzc0ZiIsInV0aSI6IllvM0h1NTdzR1U2SWtfOVkzZUFSQUEiLCJ2ZXIiOiIxLjAifQ.PC6Vmm6iY7ijrMhtkgDuOnRQBJSvIyzkv6xAET0g0IaZRDoePj3eS3VZdE86SWebbefJlTCaDTLFx9jg_5LiHUIPP_Oyz8j9PJu-tF_nsFEyVQReCANi11hgf7p-7t7RXnLui9j4-bFS0wYKqGpkcE2b9mSNaL87buFn1Uas3_JI_Ot-RuKhD2GChzjarYMuz6uWSExiIxG9zwN_A9NP3XpHFpRu4Hkm4xNO9_X0ObqsyROKQqWdS38ot-rs70rhCCigzcM1mLZXJAK8ocJX0aWSErAeYKef_aDKeYtzTnibs6So6y4Yj0VlWG9OzxaLIwWWA4b5ZQR_vUQ56LrwYA
-  // Array to hold async tasks
+
   var asyncTasks = [];
   // Loop through some items
   fdaList.forEach(function(item) {
-    // We don't actually execute the async action here
-    // We add a function containing it to an array of "tasks"
     asyncTasks.push(function(callback) {
-      // Call an async function, often a save() to DB
       wegProSearchUrl = wegProSearchUrl_b + item
       ssss = "Product-Subscription-Key"
       var options = {
         url: wegProSearchUrl,
-        headers: {
-          authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Ino0NHdNZEh1OHdLc3VtcmJmYUs5OHF4czVZSSIsImtpZCI6Ino0NHdNZEh1OHdLc3VtcmJmYUs5OHF4czVZSSJ9.eyJhdWQiOiJodHRwczovL3dlZ21hbnMtZXMuYXp1cmUtYXBpLm5ldCIsImlzcyI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzEzMThkNTdmLTc1N2ItNDViMy1iMWIwLTliM2MzODQyNzc0Zi8iLCJpYXQiOjE1MTcxMTkxMjcsIm5iZiI6MTUxNzExOTEyNywiZXhwIjoxNTE3MTIzMDI3LCJhaW8iOiJZMk5nWUxBNWNUbkgxTXo2aG1oRW9GWFlaaXN0QUE9PSIsImFwcGlkIjoiMmZhOGY3MWYtY2VjNS00OWU5LWJkMGEtMjI3ODBkYzI2YTliIiwiYXBwaWRhY3IiOiIxIiwiaWRwIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvMTMxOGQ1N2YtNzU3Yi00NWIzLWIxYjAtOWIzYzM4NDI3NzRmLyIsIm9pZCI6ImY0NTIwYmRmLTc1NWItNGY5Yi1iNWJkLTI4NGJiYTI2MTEwOSIsInN1YiI6ImY0NTIwYmRmLTc1NWItNGY5Yi1iNWJkLTI4NGJiYTI2MTEwOSIsInRpZCI6IjEzMThkNTdmLTc1N2ItNDViMy1iMWIwLTliM2MzODQyNzc0ZiIsInV0aSI6IkJrc0FLeE0tNDBDbllBYUkwZXNRQUEiLCJ2ZXIiOiIxLjAifQ.i2AR1gonDJyuwtO00WQtCnTZ1A_QwFFfxiQiT3aU52FXVEFg2WUQVg9dyEzLVr9A9aDqssXXzwatPJOnaedI7KQHpOegKhizoTKTdI2DbzXokeRVoUDhSSiuYuEF--R3ZZnGVhP0WbeBxMzh10UPrxhXVx_q0kcw2Mkc0eAUlgWgUd5uC8lDBPpQq14h3Mih8xu3_gFZrO3Hug9kxtSZ0pJyrf8zKkNc9fc1aoRvuH5Qie1uroXrilYY-sPxcO_dL-wCB7DiReq9-vCtgjAvI482xhGdx7jPxQcjbBRa6VqJ57y4qjLZQZUJ8Isjt3J2jv71ZpQYpqgS7wPpW0FNrQ',
-          'product-subscription-key': '3166d4c40f65478699a0b6be7a4f8d3a'
-        }
+        headers: hader
       };
       request.get(options, (error, response, body) => {
+        body = JSON.parse(body)
+        bodyItem = body.Results[0]
+        
         if (error) {
           skuReturn.push(error)
           callback()
         } else {
-          skuReturn.push(body)
+          skuReturn.push(bodyItem)
           callback()
         }
       })
     });
   });
   async.parallel(asyncTasks, function() {
-    return skuReturn
+     cb(null,skuReturn)
   });
+}
+wegmanProductAvail = (products, cb) => {
+  
+  availReturn = []
+  wegProAvailUrl_b = "https://wegmans-es.azure-api.net/productpublic/productavailability/"
+  var asyncTasks = [];
+  products.forEach(function(item) {
+
+    asyncTasks.push(function(callback) {
+      wegProAvailUrl = wegProAvailUrl_b + item.ItemNumber + "/stores"
+      var options = {
+        url: wegProAvailUrl,
+        headers: hader
+      };
+      request.get(options, (error, response, body) => {
+        body = JSON.parse(body)
+        
+        if (error) {
+          availReturn.push(error)
+          callback()
+        } else {
+          if(body.IsChainAvailable){
+            finalBody = getTopVelocity(body)
+            availReturn.push(finalBody)
+          }
+          callback()
+        }
+      })
+    });
+  });
+  async.parallel(asyncTasks, function() {
+     cb(null,availReturn)
+  });
+}
+
+wegmanProductPrice = (availProds, cb) => {
+  priceReturn = []
+  wegProPriceUrl_b = "https://wegmans-es.azure-api.net/pricepublic/pricing/current_prices/"
+  var asyncTasks = [];
+  availProds.forEach(function(item) {
+
+    asyncTasks.push(function(callback) {
+      wegProPriceUrl = wegProPriceUrl_b + item.Sku +"/"+ item.StoreNumber
+      var opptions = {
+        url: wegProPriceUrl,
+        headers: hader_price 
+      };
+       console.log(opptions)
+      request.get(opptions, (error, response, body) => {
+        body = JSON.parse(body)
+              console.log(body)
+
+        if (error) {
+          priceReturn.push(error)
+          callback()
+        } else { 
+          priceReturn.push(body)
+          callback()
+        }
+      })
+    });
+  });
+  async.parallel(asyncTasks, function() {
+     cb(null,priceReturn)
+  });
+}
+getTopVelocity = (produs)=>{
+  toLoop = produs.StoreAvailability
+  max = 0;
+  for (var i =0 ; i < toLoop.length; i++) {
+    console.log(toLoop[i].IsAvailable)
+    if(toLoop[i].IsAvailable && toLoop[i].Velocity > max )
+      reult = toLoop[i];
+      max = toLoop[i].Velocity
+    }
+  return reult ;
 }
 router.get('/nutr', getNutr);
 module.exports = router;
