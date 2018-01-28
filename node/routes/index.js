@@ -11,13 +11,13 @@ var hader = {
   'product-subscription-key': 'd015e7735fdf44e89273289d5ef2814e'
 }
 /* GET home page. */
-router.post('/', function(req, res, next) {
+router.get('/', function(req, res, next) {
   // res.send({"test":"test"})
   res.render('index', {
     title: 'Express'
   });
 });
-router.get('/testNutr', function(req, res, next) {
+router.post('/testNutr', function(req, res, next) {
   values = {
     "query":req.query,
     "body": req.body,
