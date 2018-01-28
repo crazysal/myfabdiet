@@ -3,58 +3,86 @@
 
     <div class="list-group text-center">
       <div class="list-group-item list-group-item-home">
-        <h1>Mobile Angular UI
-        Demo <small>1.3</small>
+        <h1>My FabDiet
         </h1>
       </div>
       <div class="list-group-item list-group-item-home">
-        <div>
-          <i class="fa fa-gamepad feature-icon text-primary"></i>
-        </div>
-        <div>
-            <h3 class="home-heading">Play around a little</h3>
-            Open the sidebar and start testing features
-        </div>
+        <form class="navbar-form navbar-left" role="search" action="javascript:void(0);">
+          <div class="form-group has-success has-feedback">
+            <label for="calories"> Daily Calories:</label>
+            <input id="calories" type="number" class="form-control" placeholder="Enter Calories">
+          </div>
+          <button class="btn btn-primary" id="calculateBtn">Calculate</button>
+          <a href="" ui-turn-on="modal1" class="btn btn-default">
+            <strong>Help Me Find My Daily Calories Needs</strong>
+          </a>
+        </form>
       </div>
-
-
       <div class="list-group-item list-group-item-home">
-        <div>
-          <i class="fa fa-tachometer feature-icon  text-primary"></i>
-        </div>
-        <div>
-            <h3 class="home-heading">Test responsiveness and speed</h3>
-            Scroll, tap, navigate, test that everything is smooth
-        </div>
+        <label>Presets (Carb/Protein/Fat):  </label>
+        <div class="col-md-12 text text-small" id="presets">
+          <button class="btn btn-default" type="button" onclick="moveSliders(60,25,15);">60/25/15<br>(High Carb)</button>
+          <button class="btn btn-default active" type="button" onclick="moveSliders(50,30,20);">50/30/20<br>(Moderate)</button>
+          <button class="btn btn-default" type="button" onclick="moveSliders(40,30,30);">40/30/30<br>(Zone Diet)</button>
+          <button class="btn btn-default" type="button" onclick="moveSliders(25,45,30);">25/45/30<br>(Low Carb)</button>
+          <button class="btn btn-default" type="button" onclick="moveSliders(10,15,75);">10/15/75<br>(Keto)</button>
+          </div>
+          <br>
       </div>
-
-
       <div class="list-group-item list-group-item-home">
-        <div>
-          <i class="fa fa-expand feature-icon  text-primary"></i>
-        </div>
-        <div>
-            <h3 class="home-heading">Resize your browser</h3>
-            Stretch and squeeze your browser window to see both mobile and desktop versions.
-        </div>
+        <table class="table" id="macro_table">
+          <tr>
+              <th style="width: 60%;" colspan="2">
+                <div class="alert alert-warning" id="displayCalsAmount" style="display: none; margin-bottom: 0; padding: 5px;">Currently displaying values for a <span></span> calories per day diet.
+                </div>
+              </th>
+              <th style="text-align: center; width: 20%;"><u>Grams per Day</u></th><th style="text-align: center; width: 20%; display: none; font-we;"><u>Grams per Meal</u></th>
+          </tr>
+              <tr>
+                <th style="width: 20%;">Carbohydrate:</th>
+              <th style="width: 40%;">Percentage: <span class="label label-primary" id="carb_percent"></span>
+              <div id="carb_slider">
+                
+              </div>
+              </th>
+              <td class="gram-value" id="carb_cals">-</td>
+              <td class="gram-value" id="carb_cals_per_meal" style="display: none;">-</td>
+          </tr>
+          <tr>
+              <th>Protein:</th>
+              <th>Percentage: <span class="label label-primary" id="protein_percent"></span>
+                <div id="protein_slider">
+                  
+                </div>
+              </th>
+              <td class="gram-value" id="protein_cals">-</td>
+              <td class="gram-value" id="protein_cals_per_meal" style="display: none;">-</td>
+          </tr>
+          <tr>
+              <th>Fat:</th>
+              <th>Percentage: <span class="label label-primary" id="fat_percent"></span>
+                <div id="fat_slider"></div>
+              </th>
+              <td class="gram-value" id="fat_cals">-</td><td class="gram-value" id="fat_cals_per_meal" style="display: none;">-</td>
+          </tr>
+          <tr>
+            <th colspan="4">Total Percentage: 
+              <span class="label label-success" id="total_percent">100%</span>
+            </th>
+          </tr>
+        </table>
       </div>
-
       <div class="list-group-item list-group-item-home">
-        <div>
-          <i class="fa fa-stethoscope feature-icon  text-primary"></i>
-        </div>
-        <div>
-            <h3 class="home-heading">Submit an issue</h3>
-            <p>Please submit any issue you'll find, <a href="https://github.com/mcasimir/mobile-angular-ui/issues" target="blank" id="#home-report">reporting</a> your user agent string:<br>
-            </p>
-<pre>{{userAgent}}</pre>
-            <p>
-              It would help a lot!
-            </p>
+            <button ng-click="myFunc()">OK</button>
+      </div>
+      <div class="list-group-item list-group-item-home">
+        <div ui-content-for="modals">
+          <div ng-include="'modal1.html'"></div>
         </div>
       </div>
-
     </div>
+    </div>
+
 
   </div>
 </div>
