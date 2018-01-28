@@ -532,7 +532,7 @@ app.controller('CalController', function($rootScope, $scope, $http, $location, $
 
          $http({
               method : "POST",
-              url : "http://127.0.0.1:3000/nutr",
+              url : "http://129.21.94.106:3000/nutr",
               data :  jsonS,
               headers: {'Content-Type': 'application/json'}
           }).then(function mySuccess(response) {
@@ -554,6 +554,7 @@ app.controller('CalController', function($rootScope, $scope, $http, $location, $
                 $scope.myValue = false
                 $scope.myValue2 = true
                 $scope.message = "Something went wrong"
+
           });
     
          // $http.post('127.0.0.1:3000/nutr', jsonS).success(function(response) {
