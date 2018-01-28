@@ -523,7 +523,7 @@ app.controller('CalController', function($rootScope, $scope, $http, $location, $
           $scope.fg.push('0900')
         jsonS.fg=$scope.fg
         if($scope.fg.length == 0)
-          $scope.message = 'Enter the FG'
+          $scope.message = 'Enter the Food Group'
         console.log(JSON.stringify(jsonS))
          // $http:post("127.0.0.1:3000/nutr", $httpParamSerializer(jsonS)).success( function(response) {
          //    $scope.students = response; 
@@ -547,11 +547,15 @@ app.controller('CalController', function($rootScope, $scope, $http, $location, $
               });
               $scope.loading = false;
               console.log(JSON.stringify($scope.repeatData))
+              $scope.myValue = true
+              $scope.myValue2 = false
           }, function myError(response) {
-                alert("MMLL")
+                // alert("Something went wrong" +JSON.stringify(response))
+                $scope.myValue = false
+                $scope.myValue2 = true
+                $scope.message = "Something went wrong"
           });
-          $scope.myValue = true
-     $scope.myValue2 = false
+    
          // $http.post('127.0.0.1:3000/nutr', jsonS).success(function(response) {
          //    $scope.response = response;
          //    $scope.loading = false;
